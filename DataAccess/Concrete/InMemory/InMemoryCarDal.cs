@@ -10,24 +10,15 @@ namespace DataAccess.Concrete.InMemory
 {
     public class InMemoryCarDal:ICarDal
     {
-        private List<Car> _cars;
+        List<Car> _cars;
 
         public InMemoryCarDal()
         {
             _cars = new List<Car>
             {
-                new Car
-                {
-                    Id = 1, BrandId = 1, ColorId = 1, DailyPrice = 10000, Description = "adsadas", ModelYear = 2022
-                },
-                new Car
-                {
-                    Id = 2, BrandId = 2, ColorId = 1, DailyPrice = 9999, Description = "dfsgfdsgs", ModelYear = 2019
-                },
-                new Car
-                {
-                    Id = 3, BrandId = 1, ColorId = 4, DailyPrice = 5000, Description = "afgdhfgdhfdg", ModelYear = 2021
-                }
+                new Car() {Id = 1, BrandId = 1, ColorId = 1, DailyPrice = 5000, Description = "Örnek", ModelYear = 2022},
+                new Car() {Id = 2, BrandId = 1, ColorId = 2, DailyPrice = 5000, Description = "Örnek 2", ModelYear = 2021},
+                new Car() {Id = 3, BrandId = 2, ColorId = 3, DailyPrice = 13000, Description = "Örnek 3", ModelYear = 2022}
             };
         }
 
@@ -45,21 +36,27 @@ namespace DataAccess.Concrete.InMemory
         public void Update(Car car)
         {
             Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
-            carToUpdate.Id = car.Id;
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
+            carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
-            carToUpdate.ModelYear = car.ModelYear;
         }
 
-        public List<Car> GetById(int Id)
+        public Car GetById(int Id)
         {
-            return _cars.Where(c => c.Id == Id).ToList();
+            Car getById = _cars.SingleOrDefault(c => c.Id == Id);
+            return getById;
         }
+
         public List<Car> GetAll()
         {
             return _cars;
+        }
+
+        public List<Car> GetAllByBrand(int brandId)
+        {
+            return _cars.Where(c=>c.BrandId == brandId).ToList();
         }
     }
 }
