@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -17,9 +18,9 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car() {Id = 1, BrandId = 1, ColorId = 1, DailyPrice = 5000, Description = "Örnek", ModelYear = 2022},
-                new Car() {Id = 2, BrandId = 1, ColorId = 2, DailyPrice = 5000, Description = "Örnek 2", ModelYear = 2021},
-                new Car() {Id = 3, BrandId = 2, ColorId = 3, DailyPrice = 13000, Description = "Örnek 3", ModelYear = 2022}
+                new Car() {CarId = 1, BrandId = 1, ColorId = 1, DailyPrice = 5000, Description = "Örnek", ModelYear = 2022},
+                new Car() {CarId = 2, BrandId = 1, ColorId = 2, DailyPrice = 5000, Description = "Örnek 2", ModelYear = 2021},
+                new Car() {CarId = 3, BrandId = 2, ColorId = 3, DailyPrice = 13000, Description = "Örnek 3", ModelYear = 2022}
             };
         }
 
@@ -30,13 +31,13 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car)
         {
-            Car carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
+            Car carToDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);
             _cars.Remove(carToDelete);
         }
 
         public void Update(Car car)
         {
-            Car carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
+            Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
             carToUpdate.BrandId = car.BrandId;
             carToUpdate.ColorId = car.ColorId;
             carToUpdate.ModelYear = car.ModelYear;
@@ -54,9 +55,14 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
+        }
+
         public Car GetById(int Id)
         {
-            Car getById = _cars.SingleOrDefault(c => c.Id == Id);
+            Car getById = _cars.SingleOrDefault(c => c.CarId == Id);
             return getById;
         }
 
