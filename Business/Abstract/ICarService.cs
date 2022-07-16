@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utilities;
 using Entities.Concrete;
 using Entities.DTOs;
 
@@ -10,13 +11,13 @@ namespace Business.Abstract
 {
     public interface ICarService
     {
-        void Add(Car car);
-        void Update(Car car);
-        void Delete(Car car);
-        List<Car> GetAll();
-        List<Car> GetByBrandId(int id);
-        List<Car> GetByColorId(int id);
-        Car GetById(int id);
-        List<CarDetailDto> GetCarDetails();
+        IResult Add(Car car);
+        IResult Update(Car car);
+        IResult Delete(Car car);
+        IDataResult<List<Car>> GetAll();
+        IDataResult<List<Car>> GetByBrandId(int id);
+        IDataResult<List<Car>> GetByColorId(int id);
+        IDataResult<Car> GetById(int carId);
+        IDataResult<List<CarDetailDto>> GetCarDetails();
     }
 }
