@@ -3,6 +3,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace ConsoleUI
 {
@@ -12,7 +13,27 @@ namespace ConsoleUI
         {
             //Test();
             //ColorTest();
-            GetCarDetailsTest();
+            //GetCarDetailsTest();
+            //TestMultiple();
+        }
+
+        private static void TestMultiple()
+        {
+            User user = new User
+                { Email = "Test@gmail.com", FirstName = "Test", LastName = "Test", Password = "Test" };
+            UserManager userManager = new UserManager(new EfUserDal());
+            //userManager.Add(user);
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            Customer customer = new Customer
+            {
+                CompanyName = "Test", UserId = 1
+            };
+            customerManager.Add(customer);
+
+            Rental testRental = new Rental
+                { CarId = 1, CustomerId = 1, RentDate = new DateTime(2022, 07, 16), ReturnDate = default };
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Add(testRental);
         }
 
         private static void GetCarDetailsTest()
