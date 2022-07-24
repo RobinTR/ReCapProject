@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 
 namespace Business.Concrete
 {
@@ -22,14 +25,10 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.Description.Length >= 2 && car.DailyPrice > 0)
-            {
-                _carDal.Add(car);
-                return new SuccessResult(Messages.CarAdded);
-            }
+            ValidationTool.Validate(new CarValidator(),car);
 
-            Console.WriteLine("Araba ismi 2 harften büyük ve günlük fiyatı 0'dan büyük olmalı.");
-            return new ErrorResult(Messages.CarAddedInvalid);
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
 
         }
 
